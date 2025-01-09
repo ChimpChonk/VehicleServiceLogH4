@@ -14,7 +14,23 @@
         android:padding="16dp">
 
         <TextView
-            android:id="@+id/service_name"
+            android:id="@+id/vehicleType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Vehicle Type"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/numberPlate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Numberplate"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/serviceName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Service Name"
@@ -22,7 +38,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/service_date"
+            android:id="@+id/serviceDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Date: 2023-10-27"
