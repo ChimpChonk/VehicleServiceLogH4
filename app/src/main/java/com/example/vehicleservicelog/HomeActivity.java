@@ -2,11 +2,14 @@ package com.example.vehicleservicelog;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.vehicleservicelog.Model.DataService;
+import com.example.vehicleservicelog.Model.ServiceLogList;
+import com.example.vehicleservicelog.Repo.DataServiceRepository;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -14,6 +17,7 @@ import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
 
+    private DataServiceRepository repository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,17 +25,18 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         FloatingActionButton btn;
-
+        repository = new DataServiceRepository(getApplication());
         RecyclerView recyclerView = findViewById(R.id.serviceRecyclerView);
 
-        List<ServiceLogList> serviceLogList = new ArrayList<>();
-
-        serviceLogList.add(new ServiceLogList("MC Honda", "ABC123", "Oil Change", "2023-10-27"));
-        serviceLogList.add(new ServiceLogList("MC Fuck", "ABC231", "Change this", "2023-10-27"));
-
-
+//        List<DataService> serviceLogList = new ArrayList<>();
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(new MyAdapter(getApplicationContext(),serviceLogList));
+        repository.getAllServiceList().observe(this, serviceLogList -> {
+            if (serviceLogList != null) {
+                recyclerView.setAdapter(new MyAdapter(getApplicationContext(), serviceLogList));
+            }
+        });
+
+//        recyclerView.setAdapter(new MyAdapter(getApplicationContext(),serviceLogList));
 
         btn = findViewById(R.id.addServiceButton);
         btn.setOnClickListener(v -> {

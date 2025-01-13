@@ -7,14 +7,17 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.vehicleservicelog.Model.DataService;
+import com.example.vehicleservicelog.Model.ServiceLogList;
+
 import java.util.List;
 
 public class MyAdapter extends RecyclerView.Adapter<MyViewHolder>{
 
     Context context;
-    List<ServiceLogList> serviceLogList;
+    List<DataService> serviceLogList;
 
-    public MyAdapter(Context context, List<ServiceLogList> serviceLogList) {
+    public MyAdapter(Context context, List<DataService> serviceLogList) {
         this.context = context;
         this.serviceLogList = serviceLogList;
     }
@@ -29,7 +32,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder>{
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.vehicleType.setText(serviceLogList.get(position).getVehicleType());
         holder.numberPlate.setText(serviceLogList.get(position).getNumberPlate());
-        holder.serviceName.setText(serviceLogList.get(position).getServiceName());
+        holder.serviceName.setText(serviceLogList.get(position).getServiceType());
         holder.serviceDate.setText(serviceLogList.get(position).getServiceDate());
     }
 
