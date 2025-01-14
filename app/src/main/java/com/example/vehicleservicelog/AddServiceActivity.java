@@ -6,10 +6,12 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Location;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -28,11 +30,24 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.vehicleservicelog.Model.DataService;
+import com.example.vehicleservicelog.Repo.DataServiceRepository;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.Priority;
+
 import java.io.IOException;
 import java.io.InputStream;
 
 public class AddServiceActivity extends AppCompatActivity {
 
+
+    private static final int LOCATION_PERMISSION_CODE = 101;
+    private FusedLocationProviderClient fusedLocationProviderClient;
+    private LocationCallback locationCallback;
     private static final int CAMERA_REQUEST_CODE = 100;
     private static final String IMAGE_DIRECTORY = "VehicleServiceLog";
     private ImageView imageView;
@@ -41,6 +56,9 @@ public class AddServiceActivity extends AppCompatActivity {
     private TextView numberPlateEditText, vehicleTypeEditText, serviceTypeEditText, serviceDescriptionEditText, dateTextView;
     private DatePicker datePicker;
     private Button saveServiceButton, getLocationButton;
+    private DataService dataService;
+    private DataServiceRepository repository;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +71,8 @@ public class AddServiceActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        repository = new DataServiceRepository(getApplication());
 
         numberPlateEditText = findViewById(R.id.numberPlateEditText);
         vehicleTypeEditText = findViewById(R.id.vehicleTypeSpinner);
@@ -88,6 +108,15 @@ public class AddServiceActivity extends AppCompatActivity {
         dateTextView.setOnClickListener(v -> {
             datePicker.setVisibility(datePicker.getVisibility() == DatePicker.VISIBLE ? DatePicker.GONE : DatePicker.VISIBLE);
             dateTextView.setText(datePicker.getDayOfMonth() + "/" + (datePicker.getMonth() + 1) + "/" + datePicker.getYear());
+        });
+
+        getLocationButton.setOnClickListener(v -> {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                    != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_CODE);
+                } else {
+                getLocation();
+            }
         });
 
         saveServiceButton.setOnClickListener(v -> saveService());
@@ -165,6 +194,45 @@ public class AddServiceActivity extends AppCompatActivity {
         return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
     }
 
+    private void getLocation() {
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+
+        // Create a LocationRequest using the new Builder
+        LocationRequest locationRequest = new LocationRequest.Builder(
+                Priority.PRIORITY_HIGH_ACCURACY, 20000) // Use the Priority class constant
+                .setMinUpdateIntervalMillis(10000) // Minimum interval for updates
+                .build();
+
+        locationCallback = new LocationCallback() {
+            @Override
+            public void onLocationResult(@NonNull LocationResult locationResult) {
+                if (locationResult == null) {
+                    Log.e("Location", "Location result is null");
+                    return;
+                }
+
+                for (Location location : locationResult.getLocations()) {
+                    if (location != null) {
+                        double latitude = location.getLatitude();
+                        double longitude = location.getLongitude();
+                        getLocationButton.setText("Lat: " + latitude + ", Lon: " + longitude);
+                    }
+                }
+            }
+        };
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, null)
+                    .addOnSuccessListener(aVoid -> Log.d("Location", "Location updates started successfully"))
+                    .addOnFailureListener(e -> Log.e("Location", "Failed to start location updates", e));
+        } else {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    LOCATION_PERMISSION_CODE);
+        }
+    }
+
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -176,15 +244,41 @@ public class AddServiceActivity extends AppCompatActivity {
                 Toast.makeText(this, "Camera permission is required to use this feature.", Toast.LENGTH_SHORT).show();
             }
         }
+
+        if (requestCode == LOCATION_PERMISSION_CODE) {
+            if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                getLocation();
+            } else {
+                Toast.makeText(this, "Location permission is required to use this feature.", Toast.LENGTH_SHORT).show();
+            }
+        }
+
     }
 
     private void saveService()
     {
+
         String numberPlate = numberPlateEditText.getText().toString();
         String vehicleType = vehicleTypeEditText.getText().toString();
         String serviceType = serviceTypeEditText.getText().toString();
         String serviceDescription = serviceDescriptionEditText.getText().toString();
         String serviceDate = dateTextView.getText().toString();
+        String location = getLocationButton.getText().toString();
+        String imageUriString = imageUri.toString();
+
+        if (!numberPlate.isEmpty() && !vehicleType.isEmpty() && !serviceType.isEmpty() && !serviceDescription.isEmpty() && !serviceDate.isEmpty() && !location.isEmpty() && !imageUriString.isEmpty()){
+            dataService = new DataService(0, numberPlate, vehicleType, serviceType, serviceDate, serviceDescription, imageUriString, location);
+            repository.insert(dataService);
+            Toast.makeText(this, "Service Saved", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(AddServiceActivity.this, HomeActivity.class);
+            startActivity(intent);
+            finish();
+
+        }
+        else {
+            Toast.makeText(this, "Please fill in all fields.", Toast.LENGTH_SHORT).show();
+            return;
+        }
     }
 }
 

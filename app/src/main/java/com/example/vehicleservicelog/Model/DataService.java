@@ -17,8 +17,9 @@ public class DataService {
     private String imageUri;
     private String location;
 
-    public DataService(String numberPlate, String vehicleType, String serviceType,
+    public DataService(int id, String numberPlate, String vehicleType, String serviceType,
                    String serviceDate, String serviceDescription, String imageUri, String location) {
+        this.id = id;
         this.numberPlate = numberPlate;
         this.vehicleType = vehicleType;
         this.serviceType = serviceType;
