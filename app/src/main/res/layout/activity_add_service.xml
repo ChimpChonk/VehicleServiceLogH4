@@ -10,143 +10,139 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="16dp">
 
         <!-- Number Plate EditText -->
         <EditText
             android:id="@+id/numberPlateEditText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="Number Plate"
+            android:hint="Enter Number Plate"
+            android:importantForAutofill="no"
             android:inputType="text"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginTop="32dp"
-            android:padding="16dp" />
+            android:minHeight="48dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <!-- Vehicle Type Spinner -->
-        <Spinner
+        <EditText
             android:id="@+id/vehicleTypeSpinner"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:prompt="@string/vehicle_type_prompt"
-            app:layout_constraintTop_toBottomOf="@id/numberPlateEditText"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
             android:layout_marginTop="16dp"
-            android:padding="16dp" />
+            android:hint="Enter Vehicle Type"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            android:minHeight="48dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/numberPlateEditText" />
 
         <!-- Service Type Spinner -->
-        <Spinner
+        <EditText
             android:id="@+id/serviceTypeSpinner"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:prompt="@string/service_type_prompt"
-            app:layout_constraintTop_toBottomOf="@id/vehicleTypeSpinner"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
             android:layout_marginTop="16dp"
-            android:padding="16dp" />
+            android:hint="Enter Service Type"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            android:minHeight="48dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/vehicleTypeSpinner"
+            tools:ignore="HardcodedText" />
 
         <!-- Service Date EditText -->
         <EditText
             android:id="@+id/serviceDateEditText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="Service Date"
-            android:inputType="date"
-            app:layout_constraintTop_toBottomOf="@id/serviceTypeSpinner"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
             android:layout_marginTop="16dp"
-            android:padding="16dp" />
+            android:focusable="false"
+            android:hint="Select Service Date"
+            android:importantForAutofill="no"
+            android:inputType="date"
+            android:minHeight="48dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/serviceTypeSpinner"
+            tools:ignore="HardcodedText" />
 
+        <DatePicker
+            android:id="@+id/datePicker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/serviceDateEditText"
+            app:layout_constraintBottom_toTopOf="@id/serviceDescriptionEditText"
+            android:visibility="gone"/>
         <!-- Service Description EditText -->
         <EditText
             android:id="@+id/serviceDescriptionEditText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="Service Description"
-            android:inputType="text"
-            app:layout_constraintTop_toBottomOf="@id/serviceDateEditText"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
             android:layout_marginTop="16dp"
-            android:padding="16dp" />
+            android:hint="Service Description"
+            android:importantForAutofill="no"
+            android:inputType="textMultiLine"
+            android:minHeight="48dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/datePicker" />
 
         <!-- Take Photo Button -->
         <Button
             android:id="@+id/takePhotoButton"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Take Photo"
             app:layout_constraintTop_toBottomOf="@id/serviceDescriptionEditText"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginTop="16dp"
-            android:padding="16dp" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="16dp" />
 
         <!-- ImageView for Captured Photo -->
         <ImageView
             android:id="@+id/capturedImageView"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:scaleType="centerCrop"
             android:contentDescription="Captured Image"
-            android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@id/takePhotoButton"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginTop="16dp" />
-
-        <!-- Retake Photo Button -->
-        <Button
-            android:id="@+id/retakePhotoButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Retake Photo"
-            android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/capturedImageView"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp" />
-
-        <!-- Remove Photo Button -->
-        <Button
-            android:id="@+id/removePhotoButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Remove Photo"
-            android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/capturedImageView"
-            app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="8dp" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
+            android:layout_marginTop="16dp"
+            tools:ignore="HardcodedText" />
 
         <!-- Get Location Button -->
+
         <Button
             android:id="@+id/getLocationButton"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Get Current Location"
-            app:layout_constraintTop_toBottomOf="@id/retakePhotoButton"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/capturedImageView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="16dp"
-            android:padding="16dp" />
+            tools:ignore="HardcodedText" />
 
         <!-- Save Service Button -->
         <Button
             android:id="@+id/saveServiceButton"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Save Service"
             app:layout_constraintTop_toBottomOf="@id/getLocationButton"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="16dp"
-            android:padding="16dp" />
+            tools:ignore="HardcodedText" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

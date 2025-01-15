@@ -1,4 +1,4 @@
-package com.example.vehicleservicelog;
+package com.example.vehicleservicelog.Model;
 
 public class ServiceLogList {
 
