@@ -32,7 +32,7 @@ public class HomeActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         repository.getAllServiceList().observe(this, serviceLogList -> {
             if (serviceLogList != null) {
-                recyclerView.setAdapter(new MyAdapter(getApplicationContext(), serviceLogList));
+                recyclerView.setAdapter(new MyAdapter(this, serviceLogList));
             }
         });
 

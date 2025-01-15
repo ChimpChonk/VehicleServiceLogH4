@@ -39,6 +39,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder>{
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, DetailServiceActivity.class);
             intent.putExtra("SERVICE_ID", serviceLogList.get(position).getId());
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
         });
     }

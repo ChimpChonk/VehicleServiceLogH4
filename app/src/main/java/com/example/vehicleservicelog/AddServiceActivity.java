@@ -257,7 +257,10 @@ public class AddServiceActivity extends AppCompatActivity {
 
     private void saveService()
     {
-
+        if (imageUri == null) {
+            Toast.makeText(this, "Please capture an image first.", Toast.LENGTH_SHORT).show();
+            return;
+        }
         String numberPlate = numberPlateEditText.getText().toString();
         String vehicleType = vehicleTypeEditText.getText().toString();
         String serviceType = serviceTypeEditText.getText().toString();
