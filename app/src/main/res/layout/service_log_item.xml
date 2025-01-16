@@ -14,18 +14,18 @@
         android:padding="16dp">
 
         <TextView
-            android:id="@+id/vehicleType"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Vehicle Type"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <TextView
             android:id="@+id/numberPlate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Numberplate"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/vehicleType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Vehicle Type"
             android:textSize="18sp"
             android:textStyle="bold" />
 

@@ -55,7 +55,7 @@ public class AddServiceActivity extends AppCompatActivity {
     private ActivityResultLauncher<Intent> cameraLauncher;
     private TextView numberPlateEditText, vehicleTypeEditText, serviceTypeEditText, serviceDescriptionEditText, dateTextView;
     private DatePicker datePicker;
-    private Button saveServiceButton, getLocationButton;
+    private Button saveServiceButton, getLocationButton, cancelButton;
     private DataService dataService;
     private DataServiceRepository repository;
 
@@ -85,6 +85,7 @@ public class AddServiceActivity extends AppCompatActivity {
         dateTextView = findViewById(R.id.serviceDateEditText);
         imageView = findViewById(R.id.capturedImageView);
         DatePicker datePicker = findViewById(R.id.datePicker);
+        cancelButton = findViewById(R.id.cancelButton);
 
 
 
@@ -120,6 +121,7 @@ public class AddServiceActivity extends AppCompatActivity {
         });
 
         saveServiceButton.setOnClickListener(v -> saveService());
+        cancelButton.setOnClickListener(v -> backHome());
     }
 
     private void captureHighResImage() {
@@ -273,15 +275,20 @@ public class AddServiceActivity extends AppCompatActivity {
             dataService = new DataService(0, numberPlate, vehicleType, serviceType, serviceDate, serviceDescription, imageUriString, location);
             repository.insert(dataService);
             Toast.makeText(this, "Service Saved", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(AddServiceActivity.this, HomeActivity.class);
-            startActivity(intent);
-            finish();
 
+            backHome();
         }
         else {
             Toast.makeText(this, "Please fill in all fields.", Toast.LENGTH_SHORT).show();
             return;
         }
+    }
+
+    private void backHome()
+    {
+        Intent intent = new Intent(AddServiceActivity.this, HomeActivity.class);
+        startActivity(intent);
+        finish();
     }
 }
 
