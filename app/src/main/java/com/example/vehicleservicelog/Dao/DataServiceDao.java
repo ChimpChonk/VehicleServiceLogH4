@@ -27,5 +27,8 @@ public interface DataServiceDao {
     @Query("SELECT id, vehicleType, numberPlate, serviceType, serviceDate FROM service_table")
     LiveData<DataService> getServiceLogList();
 
+    @Query("UPDATE service_table SET numberPlate = :numberPlate, vehicleType = :vehicleType, serviceType = :serviceType, serviceDate = :serviceDate, serviceDescription = :serviceDescription WHERE id = :id")
+    void updateService(int id, String numberPlate, String vehicleType, String serviceType, String serviceDate, String serviceDescription);
+
 
 }

@@ -49,4 +49,8 @@ public class DataServiceRepository {
     public LiveData<DataService> getServiceLogList() {
         return dataServiceDao.getServiceLogList();
     }
+
+    public void updateService(int id, String numberPlate, String vehicleType, String serviceType, String serviceDate, String serviceDescription) {
+        executorService.execute(() -> dataServiceDao.updateService(id, numberPlate, vehicleType, serviceType, serviceDate, serviceDescription));
+    }
 }
