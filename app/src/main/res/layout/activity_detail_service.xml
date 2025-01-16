@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
@@ -23,50 +24,62 @@
             android:id="@+id/numberPlateTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
             android:hint="Enter Number Plate"
             android:importantForAutofill="no"
             android:inputType="text"
-            android:layout_marginBottom="16dp" />
+            android:minHeight="48dp" />
 
         <!-- Vehicle Type EditText -->
         <EditText
             android:id="@+id/vehicleTypeTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
             android:hint="Enter Vehicle Type"
             android:importantForAutofill="no"
             android:inputType="text"
-            android:layout_marginBottom="16dp" />
+            android:minHeight="48dp" />
 
         <!-- Service Type EditText -->
         <EditText
             android:id="@+id/serviceTypeTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
             android:hint="Enter Service Type"
             android:importantForAutofill="no"
             android:inputType="text"
-            android:layout_marginBottom="16dp" />
+            android:minHeight="48dp" />
 
         <!-- Service Date EditText -->
         <EditText
             android:id="@+id/serviceDateTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
             android:hint="Select Service Date"
             android:importantForAutofill="no"
             android:inputType="date"
-            android:layout_marginBottom="16dp" />
+            android:focusable="false"
+            android:minHeight="48dp" />
+
+        <DatePicker
+            android:id="@+id/datePicker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
 
         <!-- Service Description EditText -->
         <EditText
             android:id="@+id/serviceDescriptionTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
             android:hint="Service Description"
             android:importantForAutofill="no"
             android:inputType="textMultiLine"
-            android:layout_marginBottom="16dp" />
+            android:minHeight="48dp" />
 
         <!-- ImageView for Captured Photo -->
         <ImageView
@@ -76,6 +89,18 @@
             android:layout_gravity="center"
             android:scaleType="centerCrop"
             android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:id="@+id/serviceLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Get Current Location"
+            android:textColor="@color/purple_500"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="24dp"
+            android:gravity="center"
+            android:padding="12dp" />
 
         <!-- Update and Delete Buttons arranged horizontally -->
         <LinearLayout

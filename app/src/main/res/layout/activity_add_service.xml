@@ -14,6 +14,7 @@
         android:padding="16dp">
 
         <!-- Number Plate EditText -->
+
         <EditText
             android:id="@+id/numberPlateEditText"
             android:layout_width="0dp"
@@ -139,6 +140,16 @@
             android:layout_height="wrap_content"
             android:text="Save Service"
             app:layout_constraintTop_toBottomOf="@id/getLocationButton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="16dp"
+            tools:ignore="HardcodedText" />
+        <Button
+            android:id="@+id/cancelButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Cancel"
+            app:layout_constraintTop_toBottomOf="@id/saveServiceButton"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="16dp"
